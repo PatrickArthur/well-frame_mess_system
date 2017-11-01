@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="Absolute-Center is-Responsive">
+      <%= render :partial => 'shared/flash_notice' %>
+      <div id="logo-container"></div>
+      <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <%= form_tag(:controller => "users", :action => "create", :method => "post") do %>
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <%= text_field_tag 'user[username]', nil, placeholder: 'User Name', class: "form-control" %>
+          </div>
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <%= text_field_tag 'user[email]', nil, placeholder: 'Email', class: "form-control" %>
+          </div>
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <%= password_field_tag 'user[password]', nil, placeholder: 'Password', class: "form-control" %>
+          </div>
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <%= password_field_tag 'user[password_confirmation]', nil, placeholder: 'Password Confirmation', class: "form-control" %>
+          </div>
+          <div class="form-group input-group">
+            <span class="input-group-addon">Role</span>
+            <%= select_tag 'user[role]', options_for_select(User::ROLES), {:class => 'form-control'} %>
+          </div>
+          <div class="form-group">
+            <%= submit_tag("Sign Up", :id=>"signup", :class=>"btn btn-def btn-block", :name=>"submit") %>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

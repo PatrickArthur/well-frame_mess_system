@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div class="Absolute-Center is-Responsive">
+      <%= render :partial => 'shared/flash_notice' %>
+      <h4>Thread Subject: <%=@conversation.subject%></h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>From</th>
+            <th>to</th>
+            <th>Messages</th>
+            <th>Unread</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= @conversation.sender.email %></td>
+            <td><%= @conversation.recipients.join(",") %></td>
+            <td><%= @conversation.messages.count %></td>
+            <td><%= @conversation.messages.select {|x| x.read == false }.count %></td>
+            <table class="table table-striped messages">
+              <thead>
+                <tr>
+                  <th>Message</th>
+                  <th>From</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @conversation.messages.each do |message| %>
+                  <tr>
+                    <td><%= message.message_text %></td>
+                    <td><%= message.sender.email %></td>
+                    <td><%= link_to "Reply", action: "show", controller: "message_thread", id: message.id
+                    %></td>
+                    <% if message.read == true %>
+                      <td> Read </td>
+                    <% else %>
+                      <td><%= link_to "Mark Read", message_thread_path(message.id),method: :put
+                      %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

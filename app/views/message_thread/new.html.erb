@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="Absolute-Center is-Responsive">
+      <div class="message_errors">
+        <%= render :partial => 'shared/flash_notice' %>
+      </div>
+      <div id="logo-container"></div>
+      <div class="col-sm-12 col-md-10 col-md-offset-1">
+        <%= form_tag(:controller => "message_thread", :action => "create", :method => "post", :id => "loginForm") do %>
+          <div class="form-group input-group">
+            <%= text_field_tag :subject, "",:class => "form-control", :placeholder => "subject" %>
+          </div>
+          <div class="form-group input-group">
+            <%= text_area_tag :message_text, "", rows: 5, cols: 30, :class => "form-control", :placeholder => "body" %>
+          </div>
+          <div class="form-group input-group">
+            <%= text_field_tag :recipient, "", :class => "form-control", :placeholder => "Search Caregivers", id: "care_givers" %>
+          <ul class="searched_caregivers">
+          </ul>
+          </div>
+          <div class="form-group">
+            <%= submit_tag("Send", :id=>"create_conv", :class=>"btn btn-def btn-block", :name=>"submit") %>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

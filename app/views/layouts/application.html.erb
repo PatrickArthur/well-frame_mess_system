@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wellframe</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <% unless @current_user.nil? %>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to "Home", message_thread_index_path %></li>
+            <li><%= link_to "Log out", logout_path %></li>
+          </ul>
+        </nav>
+      <% end %>
+    </div>
+  </header>
+
+  <%= yield %>
+
+</body>
+</html>

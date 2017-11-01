@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="Absolute-Center is-Responsive">
+      <div class="row">
+        Subject : <%= @message.conversation.subject %>
+      </div>
+      <div class="row">
+        From : <%= @message.conversation.sender.username %>
+      </div>
+      <div class="row">
+        Recipients : <%= @message.conversation.recipients.join(",") %>
+      </div>
+      <div class="row">
+        Message: <%= @message.message_text%>
+      </div>
+      <div class= "row">
+        <h4> Reply </h4>
+        <%= form_tag(:controller => "message_thread", :action => "reply", :method => "post", :id => @message.conversation.id) do %>
+          <div class="form-group input-group">
+            <%= text_area_tag :message_text, "", rows: 5, cols: 30, :class => "form-control", :placeholder => "body" %>
+          </div>
+          <div class="form-group">
+            <%= submit_tag("Send", :id=>"reply_mess", :class=>"btn btn-def btn-sm", :name=>"reply") %>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
