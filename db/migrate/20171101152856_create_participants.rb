@@ -8,4 +8,3 @@ class CreateParticipants < ActiveRecord::Migration
     add_index :participants, [:user_id, :conversation_id]
   end
 end
-

@@ -18,15 +18,15 @@ class UsersController < ApplicationController
   end
 
   def search
-    @user = User.where(email: params[:val], role: "caregiver").last
+    @user = User.where(email: params[:val], role: 'caregiver').last
     respond_to do |format|
-      format.json {
+      format.json do
         if !@user.nil?
-          render :json => { :care_giver => @user}
+          render json: { care_giver: @user }
         else
-          render :json => { :errors => "No CareGivers found"}
+          render json: { errors: 'No CareGivers found' }
         end
-      }
+      end
     end
   end
 

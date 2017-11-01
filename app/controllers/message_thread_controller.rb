@@ -7,12 +7,12 @@ class MessageThreadController < ApplicationController
     @conversations = @current_user.conversations
     respond_to do |format|
       format.html
-      format.json {
+      format.json do
         render json: {
-          id: @conversations.map {|x| x.id},
-          unread_messages: @conversations.each {|x| x.messages.select {|z| z.read == false}}.count
+          id: @conversations.map(&:id),
+          unread_messages: @conversations.each { |x| x.messages.select { |z| z.read == false } }.count
         }.to_json
-      }
+      end
     end
   end
 
@@ -22,7 +22,7 @@ class MessageThreadController < ApplicationController
   def create
     @conversation = Conversation.new(sender_id: @current_user.id, subject: params[:subject])
 
-    if !params[:recipients].nil?
+    unless params[:recipients].nil?
       @conversation.users << @current_user
       @conversation.users << User.find(params[:recipients])
     end
@@ -30,7 +30,7 @@ class MessageThreadController < ApplicationController
     if @conversation.save
       @message = @conversation.messages.new(sender_id: @current_user.id, message_text: params[:message_text])
       if @message.save
-        redirect_to action: "show", id: @message.id
+        redirect_to action: 'show', id: @message.id
       else
         flash[:error] = @message.errors.full_messages.to_sentence
         redirect_to new_message_thread_path
@@ -44,13 +44,13 @@ class MessageThreadController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json {
+      format.json do
         render json: {
           id: @message.id,
           message_text: @message.message_text,
           author: @message.email
         }.to_json
-      }
+      end
     end
   end
 
@@ -58,11 +58,11 @@ class MessageThreadController < ApplicationController
     @message = @conversation.messages.new(sender_id: @current_user.id, message_text: params[:message_text])
 
     if @message.save
-      flash[:notice] = "New message recieved for conversation thread"
-      redirect_to action: "conversation", id: @conversation.id
+      flash[:notice] = 'New message recieved for conversation thread'
+      redirect_to action: 'conversation', id: @conversation.id
     else
       flash[:error] = @message.errors.full_messages.to_sentence
-      redirect_to action: "show", id: @message.id
+      redirect_to action: 'show', id: @message.id
     end
   end
 
@@ -76,7 +76,7 @@ class MessageThreadController < ApplicationController
     else
       flash[:notice] = "Message ID #{@message.id} was not marked as read, error"
     end
-    redirect_to action: "conversation", id: @message.conversation.id
+    redirect_to action: 'conversation', id: @message.conversation.id
   end
 
   private
@@ -88,5 +88,4 @@ class MessageThreadController < ApplicationController
   def conversation
     @conversation ||= Conversation.find(params[:id])
   end
-
 end
